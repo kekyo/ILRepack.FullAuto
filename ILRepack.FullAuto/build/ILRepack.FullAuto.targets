@@ -1,0 +1,76 @@
+﻿<!--
+/////////////////////////////////////////////////////////////////////////////////////
+//
+// ILRepack.FullAuto - Full automatic ILRepack executor on .NET, .NET Core and .NET Framework
+// Copyright (c) Kouji Matsui (@kozy_kekyo, @kekyo@mastodon.cloud)
+//
+// Licensed under MIT: https://opensource.org/licenses/MIT
+//
+/////////////////////////////////////////////////////////////////////////////////////
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    
+  <!-- Common -->
+    
+  <PropertyGroup>
+    <ILRepackBuildEnable Condition="'$(ILRepackBuildEnable)' == ''">True</ILRepackBuildEnable>
+    <ILRepackExecutablePath Condition="'$(ILRepackExecutablePath)' == ''">$(ILRepack)</ILRepackExecutablePath>
+    <ILRepackParallelProcessing Condition="'$(ILRepackParallelProcessing)' == ''">True</ILRepackParallelProcessing>
+    <ILRepackUnionTypes Condition="'$(ILRepackUnionTypes)' == ''">True</ILRepackUnionTypes>
+    <ILRepackCopyAttributes Condition="'$(ILRepackCopyAttributes)' == ''">True</ILRepackCopyAttributes>
+    <ILRepackPerformInternalize Condition="'$(ILRepackPerformInternalize)' == ''">True</ILRepackPerformInternalize>
+    <ILRepackAllowDuplicateResources Condition="'$(ILRepackAllowDuplicateResources)' == ''">True</ILRepackAllowDuplicateResources>
+    <ILRepackAllowDuplicateNamespaces Condition="'$(ILRepackAllowDuplicateNamespaces)' == ''"></ILRepackAllowDuplicateNamespaces>
+    <ILRepackExcludeAssemblies Condition="'$(ILRepackExcludeAssemblies)' == ''"></ILRepackExcludeAssemblies>
+    <ILRepackVerbose Condition="'$(ILRepackVerbose)' == ''">False</ILRepackVerbose>
+  </PropertyGroup>
+
+  <!-- ====================================================================== -->
+
+  <!-- Building target for ILRepack -->
+  <Target Name="ILRepackBuildTarget"
+    BeforeTargets="CopyFilesToOutputDirectory"
+    Condition="'$(ILRepackBuildEnable)' == 'True'">
+    <CallTarget Targets="ILRepackPrepare; ILRepackBuildCore" />
+  </Target>
+    
+  <Target Name="ILRepackPrepare"
+    Condition="'$(ILRepackBuildEnable)' == 'True'">
+    <ItemGroup>
+      <_ILRepack_PrimaryAssembly Include="@(IntermediateAssembly->'%(FullPath)')" />
+      <_ILRepack_ReferenceAssemblies Include="$(OutputPath)*.dll"
+                                     Exclude="$(OutputPath)$(TargetName)$(TargetExt);$(ILRepackExcludeAssemblies)"/>
+    </ItemGroup>
+    <_ILRepack_GetCombinedReferencesBasePath References="@(ReferencePath)">
+      <Output TaskParameter="CombinedReferencesBasePath" PropertyName="_ILRepack_CombinedReferencesBasePath" />
+    </_ILRepack_GetCombinedReferencesBasePath>
+  </Target>
+
+  <Target Name="ILRepackBuildCore"
+    Condition="'$(ILRepackBuildEnable)' == 'True'">
+    <_ILRepack_GetAllowDuplicateOption Elements="$(ILRepackAllowDuplicateNamespaces)" Postfix=".*">
+      <Output TaskParameter="AllowDuplicateNamespacesOption" PropertyName="_ILRepack_AllowDuplicateNamespacesOption" />
+    </_ILRepack_GetAllowDuplicateOption>
+    <PropertyGroup>
+      <ILRepackBuildToolingRuntimeName Condition="'$(ILRepackBuildToolingRuntimeName)' == ''">$(_ILRepack_RuntimeName)</ILRepackBuildToolingRuntimeName>
+      <ILRepackBuildToolingPath Condition="'$(ILRepackBuildToolingPath)' == ''">$([System.IO.Path]::GetFullPath('$(ILRepackExecutablePath)'))</ILRepackBuildToolingPath>
+      <_ILRepack_CombinedReferenceBasePathOption>--lib:&quot;$(_ILRepack_CombinedReferencesBasePath)&quot;</_ILRepack_CombinedReferenceBasePathOption>
+
+      <_ILRepack_ParallelProcessingOption Condition="$(ILRepackParallelProcessing)">--parallel</_ILRepack_ParallelProcessingOption>
+      <_ILRepack_UnionTypesOption Condition="$(ILRepackUnionTypes)">--union</_ILRepack_UnionTypesOption>
+      <_ILRepack_CopyAttributesOption Condition="$(ILRepackCopyAttributes)">--copyattrs --allowMultiple</_ILRepack_CopyAttributesOption>
+      <_ILRepack_PerformInternalizeOption Condition="$(ILRepackPerformInternalize)">--internalize</_ILRepack_PerformInternalizeOption>
+      <_ILRepack_AllowDuplicateResourcesOption Condition="$(ILRepackAllowDuplicateResources)">--allowduplicateresources</_ILRepack_AllowDuplicateResourcesOption>
+      <_ILRepack_VerboseOption Condition="$(ILRepackVerbose)">--verbose</_ILRepack_VerboseOption>
+
+      <_ILRepack_Options>$(_ILRepack_ParallelProcessingOption) $(_ILRepack_UnionTypesOption) $(_ILRepack_CopyAttributesOption) $(_ILRepack_PerformInternalizeOption) $(_ILRepack_AllowDuplicateResourcesOption) $(_ILRepack_AllowDuplicateNamespacesOption) $(_ILRepack_CombinedReferenceBasePathOption) $(_ILRepack_VerboseOption)</_ILRepack_Options>
+    </PropertyGroup>
+    <Exec WorkingDirectory="$(ILRepackBuildToolingDir)"
+        Command="$(ILRepackBuildToolingRuntimeName)&quot;$(ILRepackBuildToolingPath)&quot; $(_ILRepack_Options) @(_ILRepack_PrimaryAssembly->'--out:&quot;%(FullPath)&quot;',' ') @(_ILRepack_PrimaryAssembly->'&quot;%(FullPath)&quot;',' ') @(_ILRepack_ReferenceAssemblies->'&quot;%(FullPath)&quot;',' ')" />
+    <Delete Files="@(_ILRepack_ReferenceAssemblies)" />
+    <ItemGroup>
+      <FileWrites Include="$(_ILRepack_PrimaryAssembly)" />
+      <FileWrites Include="$(_ILRepack_PrimaryAssembly->'%(RootDir)%(Directory)%(Filename).pdb')" />
+    </ItemGroup>
+  </Target>
+</Project>

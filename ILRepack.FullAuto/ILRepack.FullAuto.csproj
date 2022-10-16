@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>ILRepack.FullAuto</AssemblyName>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>$(NoWarn);CS1570;CS1591;NU5105;NU1803</NoWarn>
+      
+    <Product>ILRepack.FullAuto</Product>
+    <Trademark>ILRepack.FullAuto</Trademark>
+    <Copyright>Copyright (c) Kouji Matsui</Copyright>
+
+    <Company>Kouji Matsui (@kozy_kekyo, @kekyo@mastodon.cloud)</Company>
+    <Authors>Kouji Matsui (@kozy_kekyo, @kekyo@mastodon.cloud)</Authors>
+      
+    <NuspecFile>ILRepack.FullAuto.nuspec</NuspecFile>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RelaxVersioner" Version="2.13.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Images\ILRepack.FullAuto.100.png" Link="ILRepack.FullAuto.100.png" />
+  </ItemGroup>
+
+</Project>
