@@ -8,6 +8,7 @@
     <Nullable>enable</Nullable>
     <Deterministic>true</Deterministic>
     <NoWarn>$(NoWarn);NU1803</NoWarn>
+    <ILRepackTargetConfigurations>Debug;Release</ILRepackTargetConfigurations>
   </PropertyGroup>
 
   <ItemGroup>

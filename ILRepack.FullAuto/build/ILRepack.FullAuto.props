@@ -115,4 +115,38 @@
     </Task>
   </UsingTask>
     
+  <UsingTask
+    TaskName="_ILRepack_IsTargetConfiguration"
+    TaskFactory="$(_ILRepack_TaskFactory)"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+    <ParameterGroup>
+      <CurrnetConfiguration ParameterType="System.String" />
+      <TargetConfigurations ParameterType="System.String" />
+        <IsTargetConfiguration ParameterType="System.Boolean" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System"/>
+      <Using Namespace="System.Text"/>
+      <Using Namespace="System.Collections"/>
+      <Using Namespace="Microsoft.Build.Framework"/>
+      <Code Type="Fragment" Language="cs">
+<![CDATA[
+        CurrnetConfiguration = CurrnetConfiguration != null ? CurrnetConfiguration : "Debug";
+        TargetConfigurations = TargetConfigurations != null ? TargetConfigurations : string.Empty;
+        char[] splitters = new char[] { ',', ';' };
+        string[] targetConfigurations = TargetConfigurations.Split(splitters, StringSplitOptions.RemoveEmptyEntries);
+        IsTargetConfiguration = false;
+        foreach (string targetConfiguration in targetConfigurations)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(targetConfiguration, CurrnetConfiguration))
+            {
+                IsTargetConfiguration = true;
+                break;
+            }
+        }
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+ 
 </Project>
