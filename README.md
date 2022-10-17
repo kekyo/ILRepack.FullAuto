@@ -22,14 +22,15 @@ The significance of adding yet another package to the mix is that:
   * It runs on Linux and contributes to build automation in CI environments, ex: GitHub Actions Linux VM image.
 * Independed any MSBuild assemblies.
   Avoid strange assembly loader error related MSBuild versions.
-
-TODO:
+* Use genuine ILRepack official binary comes from NuGet package.
 
 ----
 
 ## How to use
 
 1. Install [ILRepack.FullAuto NuGet package](https://www.nuget.org/packages/ILRepack.FullAuto).
+   * If you are using on Linux environment, you need to install mono runtime.
+     (ex: Debian, Ubuntu and related: `sudo apt install mono-devel` and like.) 
 2. Done :)
 
 Default behavior is merged assemblies on both `Debug` and `Release` configuration.
@@ -55,12 +56,15 @@ These options are `PropertyGroup` variables:
 |`ILRepackBuildEnable`|Enable ILRepack processing.|`True`|
 |`ILRepackParallelProcessing`|Enable parallel processing.|`True`|
 |`ILRepackUnionTypes`|Union type declarations.|`True`|
-|`ILRepackCopyAttributes`|Copy assembly-wide attributes.|`True`|
+|`ILRepackCopyAttributes`|Copy assembly-wide attributes.|(`True` if `OutputType` property is `Exe` or `WinExe`)|
 |`ILRepackPerformInternalize`|Perform internalize between merged assembly declarations.|`True`|
 |`ILRepackAllowDuplicateResources`|Allow duplicate any resources.|`True`|
 |`ILRepackAllowDuplicateNamespaces`|Semicolon-separated namespace names (`Foo.Internal;Bar.Collection.Generic`)|(Empty)|
 |`ILRepackExcludeAssemblies`|Semicolon-separated assembly file names (`Foo.dll;Bar.dll`)|(Empty)|
-|`ILRepackVerbose`|Perform verbose log output.|`True`|
+|`ILRepackPerformVerboseOutput`|Perform verbose log output.|`False`|
+|`ILRepackInsertRepackList`|Insert repacking list into resource named `ILRepack.List`.|`False`|
+|`ILRepackMergeDebugSymbols`|Merge debug symbols.|(`DebugSymbols` property)|
+|`ILRepackMergeXmlDocuments`|Merge xml documents.|(`GenerateDocumentationFile` property)|
 
 ----
 
@@ -69,3 +73,12 @@ These options are `PropertyGroup` variables:
 Copyright (c) Kouji Matsui (@kozy_kekyo, @kekyo@mastodon.cloud)
 
 License under MIT.
+
+----
+
+## History
+
+* 0.2.0
+  * Supported additional option properties.
+* 0.1.0
+  * Initial release
