@@ -32,7 +32,17 @@ TODO:
 1. Install [ILRepack.FullAuto NuGet package](https://www.nuget.org/packages/ILRepack.FullAuto).
 2. Done :)
 
-If you need to customize, see Options section below.
+Default behavior is merged assemblies on both `Debug` and `Release` configuration.
+If you need to merge assemblies only `Release`, apply `Condition` expression:
+
+```xml
+<PackageReference Include="ILRepack.FullAuto" 
+    Condition="'$(Configuration)' == 'Release'"
+    Version="0.1.0"
+    PrivateAssets="All" />
+```
+
+If you need to more customize, see Options section below.
 
 ----
 
