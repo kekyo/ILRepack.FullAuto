@@ -33,14 +33,13 @@ The significance of adding yet another package to the mix is that:
      (ex: Debian, Ubuntu and related: `sudo apt install mono-devel` and like.) 
 2. Done :)
 
-Default behavior is merged assemblies on both `Debug` and `Release` configuration.
-If you need to merge assemblies only `Release`, apply `Condition` expression:
+Default behavior is merged assemblies only on `Release` configuration.
+If you need to merge assemblies other configuration, use `ILRepackTargetConfigurations` like:
 
 ```xml
-<PackageReference Include="ILRepack.FullAuto" 
-    Condition="'$(Configuration)' == 'Release'"
-    Version="0.1.0"
-    PrivateAssets="All" />
+<PropertyGroup>
+  <ILRepackTargetConfigurations>Debug;Release</ILRepackTargetConfigurations>
+</PropertyGroup>
 ```
 
 If you need to more customize, see Options section below.
@@ -54,6 +53,7 @@ These options are `PropertyGroup` variables:
 |Property|Detail|Default|
 |:----|:----|:----|
 |`ILRepackBuildEnable`|Enable ILRepack processing.|`True`|
+|`ILRepackTargetConfigurations`|Will merge on these configuration. Need to semicolon-separated values.|`Release`|
 |`ILRepackParallelProcessing`|Enable parallel processing.|`True`|
 |`ILRepackUnionTypes`|Union type declarations.|`True`|
 |`ILRepackCopyAttributes`|Copy assembly-wide attributes.|(`True` if `OutputType` property is `Exe` or `WinExe`)|
@@ -63,8 +63,8 @@ These options are `PropertyGroup` variables:
 |`ILRepackExcludeAssemblies`|Semicolon-separated assembly file names (`Foo.dll;Bar.dll`)|(Empty)|
 |`ILRepackPerformVerboseOutput`|Perform verbose log output.|`False`|
 |`ILRepackInsertRepackList`|Insert repacking list into resource named `ILRepack.List`.|`False`|
-|`ILRepackMergeDebugSymbols`|Merge debug symbols.|(`DebugSymbols` property)|
-|`ILRepackMergeXmlDocuments`|Merge xml documents.|(`GenerateDocumentationFile` property)|
+|`ILRepackMergeDebugSymbols`|Merge debug symbols.|(Refer `DebugSymbols` property)|
+|`ILRepackMergeXmlDocuments`|Merge xml documents.|(Refer `GenerateDocumentationFile` property)|
 
 ----
 
@@ -78,7 +78,7 @@ License under MIT.
 
 ## History
 
-* 0.2.0
+* 1.0.0
   * Supported additional option properties.
 * 0.1.0
   * Initial release

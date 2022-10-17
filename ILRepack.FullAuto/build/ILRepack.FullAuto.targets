@@ -14,6 +14,7 @@
     
   <PropertyGroup>
     <ILRepackBuildEnable Condition="'$(ILRepackBuildEnable)' == ''">True</ILRepackBuildEnable>
+    <ILRepackTargetConfigurations Condition="'$(ILRepackTargetConfigurations)' == ''">Release</ILRepackTargetConfigurations>
     <ILRepackExecutablePath Condition="'$(ILRepackExecutablePath)' == ''">$(ILRepack)</ILRepackExecutablePath>
     <ILRepackParallelProcessing Condition="'$(ILRepackParallelProcessing)' == ''">True</ILRepackParallelProcessing>
     <ILRepackUnionTypes Condition="'$(ILRepackUnionTypes)' == ''">True</ILRepackUnionTypes>
@@ -44,13 +45,21 @@
       <_ILRepack_ReferenceAssemblies Include="$(OutputPath)*.dll"
                                      Exclude="$(OutputPath)$(TargetName)$(TargetExt);$(ILRepackExcludeAssemblies)"/>
     </ItemGroup>
-    <_ILRepack_GetCombinedReferencesBasePath References="@(ReferencePath)">
-      <Output TaskParameter="CombinedReferencesBasePath" PropertyName="_ILRepack_CombinedReferencesBasePath" />
+    <_ILRepack_IsTargetConfiguration
+      CurrnetConfiguration="$(Configuration)"
+      TargetConfigurations="$(ILRepackTargetConfigurations)">
+      <Output TaskParameter="IsTargetConfiguration"
+              PropertyName="_ILRepack_IsTargetConfiguration" />
+    </_ILRepack_IsTargetConfiguration>
+    <_ILRepack_GetCombinedReferencesBasePath
+      References="@(ReferencePath)">
+      <Output TaskParameter="CombinedReferencesBasePath"
+              PropertyName="_ILRepack_CombinedReferencesBasePath" />
     </_ILRepack_GetCombinedReferencesBasePath>
   </Target>
 
   <Target Name="ILRepackBuildCore"
-    Condition="'$(ILRepackBuildEnable)' == 'True'">
+    Condition="$(ILRepackBuildEnable) AND $(_ILRepack_IsTargetConfiguration)">
     <_ILRepack_GetAllowDuplicateOption Elements="$(ILRepackAllowDuplicateNamespaces)" Postfix=".*">
       <Output TaskParameter="AllowDuplicateNamespacesOption" PropertyName="_ILRepack_AllowDuplicateNamespacesOption" />
     </_ILRepack_GetAllowDuplicateOption>
