@@ -78,6 +78,8 @@ License under MIT.
 
 ## History
 
+* 1.1.0
+  * Fixed causing invalid expression for `ILRepackMergeDebugSymbols` evaluation.
 * 1.0.0
   * Supported additional option properties.
 * 0.1.0
