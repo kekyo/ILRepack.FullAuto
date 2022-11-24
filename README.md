@@ -56,7 +56,7 @@ These options are `PropertyGroup` variables:
 |`ILRepackTargetConfigurations`|Will merge on these configuration. Need to semicolon-separated values.|`Release`|
 |`ILRepackParallelProcessing`|Enable parallel processing.|`True`|
 |`ILRepackUnionTypes`|Union type declarations.|`True`|
-|`ILRepackCopyAttributes`|Copy assembly-wide attributes.|(`True` if `OutputType` property is `Exe` or `WinExe`)|
+|`ILRepackCopyAttributes`|Copy assembly-wide attributes.|`False`|
 |`ILRepackPerformInternalize`|Perform internalize between merged assembly declarations.|`True`|
 |`ILRepackAllowDuplicateResources`|Allow duplicate any resources.|`True`|
 |`ILRepackAllowDuplicateNamespaces`|Semicolon-separated namespace names (`Foo.Internal;Bar.Collection.Generic`)|(Empty)|
@@ -78,6 +78,8 @@ License under MIT.
 
 ## History
 
+* 1.1.0
+  * Fixed causing invalid expression for `ILRepackMergeDebugSymbols` evaluation.
 * 1.0.0
   * Supported additional option properties.
 * 0.1.0

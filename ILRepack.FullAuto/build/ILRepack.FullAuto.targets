@@ -69,7 +69,9 @@
 
       <_ILRepack_MergeXmlDocuments Condition="'$(ILRepackMergeXmlDocuments)' != ''">$(ILRepackMergeXmlDocuments)</_ILRepack_MergeXmlDocuments>
       <_ILRepack_MergeXmlDocuments Condition="'$(ILRepackMergeXmlDocuments)' == ''">False</_ILRepack_MergeXmlDocuments>
-        
+      <_ILRepack_MergeDebugSymbols Condition="'$(ILRepackMergeDebugSymbols)' != ''">$(ILRepackMergeDebugSymbols)</_ILRepack_MergeDebugSymbols>
+      <_ILRepack_MergeDebugSymbols Condition="'$(ILRepackMergeDebugSymbols)' == ''">True</_ILRepack_MergeDebugSymbols>
+
       <_ILRepack_CombinedReferenceBasePathOption>--lib:&quot;$(_ILRepack_CombinedReferencesBasePath)&quot;</_ILRepack_CombinedReferenceBasePathOption>
 
       <_ILRepack_ParallelProcessingOption Condition="$(ILRepackParallelProcessing)">--parallel</_ILRepack_ParallelProcessingOption>
@@ -79,7 +81,7 @@
       <_ILRepack_AllowDuplicateResourcesOption Condition="$(ILRepackAllowDuplicateResources)">--allowduplicateresources</_ILRepack_AllowDuplicateResourcesOption>
       <_ILRepack_PerformVerboseOutput Condition="$(ILRepackPerformVerboseOutput)">--verbose</_ILRepack_PerformVerboseOutput>
       <_ILRepack_InsertRepackListOutput Condition="!($(ILRepackInsertRepackList))">--noRepackRes</_ILRepack_InsertRepackListOutput>
-      <_ILRepack_MergeDebugSymbolsOutput Condition="!($(ILRepackMergeDebugSymbols))">--ndebug</_ILRepack_MergeDebugSymbolsOutput>
+      <_ILRepack_MergeDebugSymbolsOutput Condition="!($(_ILRepack_MergeDebugSymbols))">--ndebug</_ILRepack_MergeDebugSymbolsOutput>
       <_ILRepack_MergeXmlDocumentsOutput Condition="$(_ILRepack_MergeXmlDocuments)">--xmldocs</_ILRepack_MergeXmlDocumentsOutput>
 
       <_ILRepack_Options>$(_ILRepack_ParallelProcessingOption) $(_ILRepack_UnionTypesOption) $(_ILRepack_CopyAttributesOption) $(_ILRepack_PerformInternalizeOption) $(_ILRepack_AllowDuplicateResourcesOption) $(_ILRepack_AllowDuplicateNamespacesOption) $(_ILRepack_CombinedReferenceBasePathOption) $(_ILRepack_PerformVerboseOutput) $(_ILRepack_InsertRepackListOutput) $(_ILRepack_MergeDebugSymbolsOutput) $(_ILRepack_MergeXmlDocumentsOutput)</_ILRepack_Options>
