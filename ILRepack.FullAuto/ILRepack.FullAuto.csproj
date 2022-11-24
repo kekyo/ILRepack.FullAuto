@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RelaxVersioner" Version="2.13.1" PrivateAssets="All" />
+    <PackageReference Include="RelaxVersioner" Version="2.14.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
