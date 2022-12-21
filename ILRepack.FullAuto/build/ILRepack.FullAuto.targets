@@ -90,7 +90,7 @@
         Command="$(ILRepackBuildToolingRuntimeName)&quot;$(ILRepackBuildToolingPath)&quot; $(_ILRepack_Options) @(_ILRepack_PrimaryAssembly->'--out:&quot;%(FullPath)&quot;',' ') @(_ILRepack_PrimaryAssembly->'&quot;%(FullPath)&quot;',' ') @(_ILRepack_ReferenceAssemblies->'&quot;%(FullPath)&quot;',' ')" />
     <Delete Files="@(_ILRepack_ReferenceAssemblies)" />
     <Delete Files="@(_ILRepack_ReferenceAssemblies->'%(TargetName).pdb')"
-            Condition="$(ILRepackMergeDebugSymbols)" />
+            Condition="$(_ILRepack_MergeDebugSymbols)" />
     <Delete Files="@(_ILRepack_ReferenceAssemblies->'%(TargetName).xml')"
             Condition="$(_ILRepack_MergeXmlDocuments)" />
     <ItemGroup>
