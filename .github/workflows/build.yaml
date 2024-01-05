@@ -102,13 +102,14 @@ jobs:
     #-----------------------------------------------------------------------
     # Setup environments
 
-    - name: Uninstall Existing .NET SDK
-      run: |
-        $sdkVersions = Get-Command -Name dotnet | ForEach-Object { $_.FileVersionInfo.ProductVersion }
-        foreach ($sdkVersion in $sdkVersions) {
-            Write-Host "Uninstalling .NET SDK version: $sdkVersion"
-            dotnet sdk uninstall -v $sdkVersion --all
-        }
+    # windows vm is not clean, but I don't know how to make clean environment...
+    #- name: Uninstall Existing .NET SDK
+    #  run: |
+    #    $sdkVersions = Get-Command -Name dotnet | ForEach-Object { $_.FileVersionInfo.ProductVersion }
+    #    foreach ($sdkVersion in $sdkVersions) {
+    #        Write-Host "Uninstalling .NET SDK version: $sdkVersion"
+    #        dotnet sdk uninstall -v $sdkVersion --all
+    #    }
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
