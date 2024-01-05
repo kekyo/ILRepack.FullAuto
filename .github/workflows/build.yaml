@@ -105,7 +105,7 @@ jobs:
     - name: Uninstall Existing .NET SDK
       run: |
         $sdkVersions = Get-Command -Name dotnet | ForEach-Object { $_.FileVersionInfo.ProductVersion }
-        foreach (sdkVersion in $sdkVersions) {
+        foreach ($sdkVersion in $sdkVersions) {
             Write-Host "Uninstalling .NET SDK version: sdkVersion"
             $uninstallCommand = "dotnet-uninstall-pkgs.ps1 -Version $sdkVersion"
             iex ((New-Object System.Net.WebClient).DownloadString("https://dot.net/v1/dotnet-install.ps1"))
