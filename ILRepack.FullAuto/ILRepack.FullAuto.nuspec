@@ -15,7 +15,7 @@
     <repository type="git" url="https://github.com/kekyo/ILRepack.FullAuto.git" branch="$RepositoryBranch$" commit="$RepositoryCommit$" />
     <developmentDependency>true</developmentDependency>
     <dependencies>
-      <dependency id="ILRepack" version="2.0.18" />
+      <dependency id="ILRepack" version="2.0.22" />
     </dependencies>
   </metadata>
   <files>

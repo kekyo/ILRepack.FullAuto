@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>ILRepack.FullAuto</AssemblyName>
+    <LangVersion>latest</LangVersion>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
@@ -22,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RelaxVersioner" Version="2.14.0" PrivateAssets="All" />
+    <PackageReference Include="RelaxVersioner" Version="3.3.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
