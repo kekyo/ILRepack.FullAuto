@@ -10,10 +10,19 @@
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+  <PropertyGroup Condition="('$(MSBuildRuntimeType)' == 'Core') AND ('$(MicrosoftNETBuildTasksTFM)' != '')">
+    <_ILRepack_RuntimeName>dotnet </_ILRepack_RuntimeName>
+  </PropertyGroup>
+  <PropertyGroup Condition="('$(MSBuildRuntimeType)' == 'Core') AND ('$(MicrosoftNETBuildTasksTFM)' == '') AND ('$(OS)' == 'Windows_NT')">
     <_ILRepack_RuntimeName></_ILRepack_RuntimeName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+  <PropertyGroup Condition="('$(MSBuildRuntimeType)' == 'Core') AND ('$(MicrosoftNETBuildTasksTFM)' == '') AND ('$(OS)' != 'Windows_NT')">
+    <_ILRepack_RuntimeName>mono </_ILRepack_RuntimeName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Full'">
+    <_ILRepack_RuntimeName></_ILRepack_RuntimeName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Mono'">
     <_ILRepack_RuntimeName>mono </_ILRepack_RuntimeName>
   </PropertyGroup>
 
