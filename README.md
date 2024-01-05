@@ -30,8 +30,7 @@ The significance of adding yet another package to the mix is that:
 
 Build environments:
 
-* .NET SDK 8, 7, 6 and 5.
-* .NET Core SDK 3.1 and 2.2.
+* .NET SDK 8, 7 and 6.
 * .NET Framework SDK 4.0 or upper.
 
 Target binaries:

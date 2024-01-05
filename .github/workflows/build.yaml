@@ -6,7 +6,7 @@ jobs:
   linux:
     strategy:
       matrix:
-        netver: [2.2, 3.1, 5.0, 6.0, 7.0, 8.0]
+        netver: [6.0, 7.0, 8.0]
     runs-on: ubuntu-latest
     steps:
 
@@ -78,7 +78,7 @@ jobs:
   windows:
     strategy:
       matrix:
-        netver: [2.2, 3.1, 5.0, 6.0, 7.0, 8.0]
+        netver: [6.0, 7.0, 8.0]
     runs-on: windows-latest
     steps:
 
