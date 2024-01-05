@@ -29,8 +29,6 @@ The significance of adding yet another package to the mix is that:
 ## How to use
 
 1. Install [ILRepack.FullAuto NuGet package](https://www.nuget.org/packages/ILRepack.FullAuto).
-   * If you are using on Linux environment, you need to install mono runtime.
-     (ex: Debian, Ubuntu and related: `sudo apt install mono-devel` and like.) 
 2. Done :)
 
 Default behavior is merged assemblies only on `Release` configuration.
