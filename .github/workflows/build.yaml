@@ -50,7 +50,7 @@ jobs:
       run: dotnet build -p:Configuration=Release -p:Platform="Any CPU" -p:RestoreNoCache=True -p:BuildIdentifier=${GITHUB_RUN_NUMBER} ILRepack.FullAuto.sln
 
     - name: Build NuGet packages
-      run: dotnet pack -p:Configuration=Release -p:Platform="Any CPU" -p:BuildIdentifier=${GITHUB_RUN_NUMBER} -o artifacts ILRepack.FullAuto/ILRepack.FullAuto.csproj
+      run: dotnet pack -p:Configuration=Release -p:Platform="Any CPU" -p:BuildIdentifier=${GITHUB_RUN_NUMBER} -o artifacts ILRepack.FullAuto.sln
 
     #-----------------------------------------------------------------------
     # Test
@@ -120,7 +120,7 @@ jobs:
       run: dotnet build -p:Configuration=Release -p:Platform="Any CPU" -p:RestoreNoCache=True -p:BuildIdentifier=${GITHUB_RUN_NUMBER} ILRepack.FullAuto.sln
 
     - name: Build NuGet packages
-      run: dotnet pack -p:Configuration=Release -p:Platform="Any CPU" -p:BuildIdentifier=${GITHUB_RUN_NUMBER} -o artifacts ILRepack.FullAuto\ILRepack.FullAuto.csproj
+      run: dotnet pack -p:Configuration=Release -p:Platform="Any CPU" -p:BuildIdentifier=${GITHUB_RUN_NUMBER} -o artifacts ILRepack.FullAuto.sln
 
     #-----------------------------------------------------------------------
     # Test
