@@ -33,8 +33,6 @@ jobs:
     - name: Uninstall Existing .NET SDK
       run: |
         sudo apt-get remove --purge '^dotnet-sdk-' -y
-        sudo apt-get autoremove -y
-        sudo apt-get clean
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
