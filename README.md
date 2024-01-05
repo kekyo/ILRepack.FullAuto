@@ -26,6 +26,20 @@ The significance of adding yet another package to the mix is that:
 
 ----
 
+## Requirements
+
+Build environments:
+
+* .NET SDK 8, 7, 6 and 5.
+* .NET Core SDK 3.1 and 2.2.
+* .NET Framework SDK 4.0 or upper.
+
+Target binaries:
+
+* Depends on the conditions required by official ILRepack package.
+
+----
+
 ## How to use
 
 1. Install [ILRepack.FullAuto NuGet package](https://www.nuget.org/packages/ILRepack.FullAuto).
