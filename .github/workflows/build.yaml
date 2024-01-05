@@ -4,6 +4,9 @@ on: [push]
 
 jobs:
   linux:
+    strategy:
+      matrix:
+        netver: [2.2, 3.1, 5.0, 6.0, 7.0, 8.0]
     runs-on: ubuntu-latest
     steps:
 
@@ -31,12 +34,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: |
-          2.2.x
-          3.1.x
-          5.0.x
-          6.0.x
-          7.0.x
-          8.0.x
+          ${{ matrix.netver }}.x
 
     - name: Setup NuGet package reference
       run: |
@@ -74,6 +72,9 @@ jobs:
     #  run: dotnet nuget push artifacts/ILRepack.FullAuto.*.nupkg --source ref1
 
   windows:
+    strategy:
+      matrix:
+        netver: [2.2, 3.1, 5.0, 6.0, 7.0, 8.0]
     runs-on: windows-latest
     steps:
 
@@ -101,12 +102,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: |
-          2.2.x
-          3.1.x
-          5.0.x
-          6.0.x
-          7.0.x
-          8.0.x
+          ${{ matrix.netver }}.x
 
     - name: Setup NuGet package reference
       run: |
