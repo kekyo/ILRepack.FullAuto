@@ -18,7 +18,7 @@ The significance of adding yet another package to the mix is that:
 * Completely automatic. There is no need to manually insert additional properties or scripts.
   Of course, you can manually configure optional parameters for `ILRepack` if you need.
 * Windows and Linux are supported as operating environments.
-  (Linux environment requires mono installation.)
+  * On linux, mono and CoreCLR environment are valid. CoreCLR SDK version requires 6.0 or above.
   * It runs on Linux and contributes to build automation in CI environments, ex: GitHub Actions Linux VM image.
 * Independed any MSBuild assemblies.
   Avoid strange assembly loader error related MSBuild versions.
@@ -78,6 +78,9 @@ License under MIT.
 
 ## History
 
+* 1.3.0
+  * Updated referring ILRepack new version package 2.0.22.
+  * Unleashed on .NET 6.0 SDK or above.
 * 1.2.0
   * Fixed omissions in `ILRepackMergeDebugSymbols`.
 * 1.1.0

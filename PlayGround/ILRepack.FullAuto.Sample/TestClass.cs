@@ -10,13 +10,14 @@
 using Newtonsoft.Json;
 using System;
 
-namespace ILRepack.FullAuto;
-
-public class TestClass
+namespace ILRepack.FullAuto
 {
-    public static string Test()
+    public class TestClass
     {
-        var json = JsonConvert.SerializeObject(DateTime.Now);
-        return json;
+        public static string Test()
+        {
+            var json = JsonConvert.SerializeObject(DateTime.Now);
+            return json;
+        }
     }
 }
