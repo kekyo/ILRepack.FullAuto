@@ -89,6 +89,8 @@ License under MIT.
 
 ## History
 
+*.1.4.0
+  * Updated referring ILRepack to 2.0.25.
 * 1.3.0
   * Updated referring ILRepack new version package 2.0.22.
   * Unleashed on .NET 6.0 SDK or above.

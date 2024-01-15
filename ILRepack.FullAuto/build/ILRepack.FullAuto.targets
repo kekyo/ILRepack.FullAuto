@@ -72,7 +72,7 @@
       <_ILRepack_MergeDebugSymbols Condition="'$(ILRepackMergeDebugSymbols)' != ''">$(ILRepackMergeDebugSymbols)</_ILRepack_MergeDebugSymbols>
       <_ILRepack_MergeDebugSymbols Condition="'$(ILRepackMergeDebugSymbols)' == ''">True</_ILRepack_MergeDebugSymbols>
 
-      <_ILRepack_CombinedReferenceBasePathOption>--lib:&quot;$(_ILRepack_CombinedReferencesBasePath)&quot;</_ILRepack_CombinedReferenceBasePathOption>
+      <_ILRepack_CombinedReferenceBasePathOption>$(_ILRepack_CombinedReferencesBasePath)</_ILRepack_CombinedReferenceBasePathOption>
 
       <_ILRepack_ParallelProcessingOption Condition="$(ILRepackParallelProcessing)">--parallel</_ILRepack_ParallelProcessingOption>
       <_ILRepack_UnionTypesOption Condition="$(ILRepackUnionTypes)">--union</_ILRepack_UnionTypesOption>
