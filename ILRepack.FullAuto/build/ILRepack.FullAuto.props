@@ -72,12 +72,12 @@
             if (!string.IsNullOrEmpty(item.ItemSpec))
             {
                 string path = Path.GetDirectoryName(Path.GetFullPath(item.ItemSpec));
-                candidates[path] = path;
+                candidates[path] = "--lib:\"" + path + "\"";
             }
         }
-        object[] pathList = new object[candidates.Keys.Count];
-        candidates.Keys.CopyTo(pathList, 0);
-        CombinedReferencesBasePath = string.Join(";", pathList);
+        object[] pathList = new object[candidates.Values.Count];
+        candidates.Values.CopyTo(pathList, 0);
+        CombinedReferencesBasePath = string.Join(" ", pathList);
 ]]>
       </Code>
     </Task>
