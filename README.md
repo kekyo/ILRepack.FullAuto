@@ -91,6 +91,7 @@ License under MIT.
 ## History
 
 * 1.5.0
+  * Updated referring ILRepack to 2.0.27.
   * Added `ILRepackRenameInternalized` option.
 * 1.4.0
   * Updated referring ILRepack to 2.0.25.
