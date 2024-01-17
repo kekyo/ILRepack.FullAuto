@@ -94,6 +94,7 @@ License under MIT.
 * 1.5.0
   * Updated referring ILRepack to 2.0.27.
   * Added `ILRepackRenameInternalized` and `ILRepackExcludeInternalizeSerializable` option.
+  * Fixed always enabling CopyLocalLockFileAssemblies when package installed.
 * 1.4.0
   * Updated referring ILRepack to 2.0.25.
 * 1.3.0

@@ -10,6 +10,29 @@
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+  <!-- Defaulted variables. -->
+
+  <PropertyGroup>
+    <ILRepackBuildEnable>True</ILRepackBuildEnable>
+    <ILRepackTargetConfigurations>Release</ILRepackTargetConfigurations>
+    <ILRepackExecutablePath></ILRepackExecutablePath>
+    <ILRepackParallelProcessing>True</ILRepackParallelProcessing>
+    <ILRepackUnionTypes>True</ILRepackUnionTypes>
+    <ILRepackCopyAttributes>False</ILRepackCopyAttributes>
+    <ILRepackPerformInternalize>True</ILRepackPerformInternalize>
+    <ILRepackRenameInternalized>False</ILRepackRenameInternalized>
+    <ILRepackExcludeInternalizeSerializable>False</ILRepackExcludeInternalizeSerializable>
+    <ILRepackAllowDuplicateResources>True</ILRepackAllowDuplicateResources>
+    <ILRepackAllowDuplicateNamespaces></ILRepackAllowDuplicateNamespaces>
+    <ILRepackExcludeAssemblies></ILRepackExcludeAssemblies>
+    <ILRepackPerformVerboseOutput>False</ILRepackPerformVerboseOutput>
+    <ILRepackInsertRepackList>False</ILRepackInsertRepackList>
+    <ILRepackMergeDebugSymbols></ILRepackMergeDebugSymbols>
+    <ILRepackMergeXmlDocuments></ILRepackMergeXmlDocuments>
+  </PropertyGroup>
+
+  <!-- ============================================================================= -->
+
   <PropertyGroup Condition="('$(MSBuildRuntimeType)' == 'Core') AND ('$(MicrosoftNETBuildTasksTFM)' != '')">
     <_ILRepack_RuntimeName>dotnet </_ILRepack_RuntimeName>
   </PropertyGroup>
@@ -28,7 +51,6 @@
 
   <PropertyGroup>
     <_ILRepack_ScriptBaseDir>$(MSBuildThisFileDirectory)</_ILRepack_ScriptBaseDir>
-    <CopyLocalLockFileAssemblies>True</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <!-- ============================================================================= -->
