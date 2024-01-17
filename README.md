@@ -69,6 +69,8 @@ These options are `PropertyGroup` variables:
 |`ILRepackUnionTypes`|Union type declarations.|`True`|
 |`ILRepackCopyAttributes`|Copy assembly-wide attributes.|`False`|
 |`ILRepackPerformInternalize`|Perform internalize between merged assembly declarations.|`True`|
+|`ILRepackRenameInternalized`|Perform automatic renaming internalized declarations.|`False`|
+|`ILRepackExcludeInternalizeSerializable`|Exclude internalizing when the type is marked serializable.|`False`|
 |`ILRepackAllowDuplicateResources`|Allow duplicate any resources.|`True`|
 |`ILRepackAllowDuplicateNamespaces`|Semicolon-separated namespace names (`Foo.Internal;Bar.Collection.Generic`)|(Empty)|
 |`ILRepackExcludeAssemblies`|Semicolon-separated assembly file names (`Foo.dll;Bar.dll`)|(Empty)|
@@ -89,6 +91,10 @@ License under MIT.
 
 ## History
 
+* 1.5.0
+  * Updated referring ILRepack to 2.0.27.
+  * Added `ILRepackRenameInternalized` and `ILRepackExcludeInternalizeSerializable` option.
+  * Fixed always enabling CopyLocalLockFileAssemblies when package installed.
 * 1.4.0
   * Updated referring ILRepack to 2.0.25.
 * 1.3.0

@@ -10,47 +10,44 @@
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     
-  <!-- Common -->
+  <!-- Reflect referring defaulted variables. -->
     
   <PropertyGroup>
-    <ILRepackBuildEnable Condition="'$(ILRepackBuildEnable)' == ''">True</ILRepackBuildEnable>
-    <ILRepackTargetConfigurations Condition="'$(ILRepackTargetConfigurations)' == ''">Release</ILRepackTargetConfigurations>
     <ILRepackExecutablePath Condition="'$(ILRepackExecutablePath)' == ''">$(ILRepack)</ILRepackExecutablePath>
-    <ILRepackParallelProcessing Condition="'$(ILRepackParallelProcessing)' == ''">True</ILRepackParallelProcessing>
-    <ILRepackUnionTypes Condition="'$(ILRepackUnionTypes)' == ''">True</ILRepackUnionTypes>
-    <ILRepackCopyAttributes Condition="'$(ILRepackCopyAttributes)' == ''">False</ILRepackCopyAttributes>
-    <ILRepackPerformInternalize Condition="'$(ILRepackPerformInternalize)' == ''">True</ILRepackPerformInternalize>
-    <ILRepackAllowDuplicateResources Condition="'$(ILRepackAllowDuplicateResources)' == ''">True</ILRepackAllowDuplicateResources>
-    <ILRepackAllowDuplicateNamespaces Condition="'$(ILRepackAllowDuplicateNamespaces)' == ''"></ILRepackAllowDuplicateNamespaces>
-    <ILRepackExcludeAssemblies Condition="'$(ILRepackExcludeAssemblies)' == ''"></ILRepackExcludeAssemblies>
-    <ILRepackPerformVerboseOutput Condition="'$(ILRepackPerformVerboseOutput)' == ''">False</ILRepackPerformVerboseOutput>
-    <ILRepackInsertRepackList Condition="'$(ILRepackInsertRepackList)' == ''">False</ILRepackInsertRepackList>
     <ILRepackMergeDebugSymbols Condition="'$(ILRepackMergeDebugSymbols)' == ''">$(DebugSymbols)</ILRepackMergeDebugSymbols>
     <ILRepackMergeXmlDocuments Condition="'$(ILRepackMergeXmlDocuments)' == ''">$(GenerateDocumentationFile)</ILRepackMergeXmlDocuments>
   </PropertyGroup>
 
   <!-- ====================================================================== -->
 
-  <!-- Building target for ILRepack -->
-  <Target Name="ILRepackBuildTarget"
-    BeforeTargets="CopyFilesToOutputDirectory"
-    Condition="'$(ILRepackBuildEnable)' == 'True'">
-    <CallTarget Targets="ILRepackPrepare; ILRepackBuildCore" />
-  </Target>
-    
-  <Target Name="ILRepackPrepare"
-    Condition="'$(ILRepackBuildEnable)' == 'True'">
-    <ItemGroup>
-      <_ILRepack_PrimaryAssembly Include="@(IntermediateAssembly->'%(FullPath)')" />
-      <_ILRepack_ReferenceAssemblies Include="$(OutputPath)*.dll"
-                                     Exclude="$(OutputPath)$(TargetName)$(TargetExt);$(ILRepackExcludeAssemblies)"/>
-    </ItemGroup>
+  <!-- Prepare configuration -->
+  <Target Name="ILRepackPrepareConfiguration"
+    BeforeTargets="ResolveLockFileCopyLocalFiles">
     <_ILRepack_IsTargetConfiguration
       CurrnetConfiguration="$(Configuration)"
       TargetConfigurations="$(ILRepackTargetConfigurations)">
       <Output TaskParameter="IsTargetConfiguration"
               PropertyName="_ILRepack_IsTargetConfiguration" />
     </_ILRepack_IsTargetConfiguration>
+    <PropertyGroup Condition="('$(ILRepackBuildEnable)' == 'True') AND ('$(_ILRepack_IsTargetConfiguration)')">
+      <CopyLocalLockFileAssemblies>True</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Building target for ILRepack -->
+  <Target Name="ILRepackBuildTarget"
+    BeforeTargets="CopyFilesToOutputDirectory"
+    Condition="'$(ILRepackBuildEnable)' == 'True'">
+    <CallTarget Targets="ILRepackPrepareBuild; ILRepackBuildCore" />
+  </Target>
+    
+  <Target Name="ILRepackPrepareBuild"
+    Condition="'$(ILRepackBuildEnable)' == 'True'">
+    <ItemGroup>
+      <_ILRepack_PrimaryAssembly Include="@(IntermediateAssembly->'%(FullPath)')" />
+      <_ILRepack_ReferenceAssemblies Include="$(OutputPath)*.dll"
+                                     Exclude="$(OutputPath)$(TargetName)$(TargetExt);$(ILRepackExcludeAssemblies)"/>
+    </ItemGroup>
     <_ILRepack_GetCombinedReferencesBasePath
       References="@(ReferencePath)">
       <Output TaskParameter="CombinedReferencesBasePath"
@@ -78,13 +75,15 @@
       <_ILRepack_UnionTypesOption Condition="$(ILRepackUnionTypes)">--union</_ILRepack_UnionTypesOption>
       <_ILRepack_CopyAttributesOption Condition="$(ILRepackCopyAttributes)">--copyattrs --allowMultiple</_ILRepack_CopyAttributesOption>
       <_ILRepack_PerformInternalizeOption Condition="$(ILRepackPerformInternalize)">--internalize</_ILRepack_PerformInternalizeOption>
+      <_ILRepack_RenameInternalizedOption Condition="$(ILRepackRenameInternalized)">--renameinternalized</_ILRepack_RenameInternalizedOption>
+      <_ILRepack_ExcludeInternalizeSerializableOption Condition="$(ILRepackExcludeInternalizeSerializable)">--excludeinternalizeserializable</_ILRepack_ExcludeInternalizeSerializableOption>
       <_ILRepack_AllowDuplicateResourcesOption Condition="$(ILRepackAllowDuplicateResources)">--allowduplicateresources</_ILRepack_AllowDuplicateResourcesOption>
       <_ILRepack_PerformVerboseOutput Condition="$(ILRepackPerformVerboseOutput)">--verbose</_ILRepack_PerformVerboseOutput>
       <_ILRepack_InsertRepackListOutput Condition="!($(ILRepackInsertRepackList))">--noRepackRes</_ILRepack_InsertRepackListOutput>
       <_ILRepack_MergeDebugSymbolsOutput Condition="!($(_ILRepack_MergeDebugSymbols))">--ndebug</_ILRepack_MergeDebugSymbolsOutput>
       <_ILRepack_MergeXmlDocumentsOutput Condition="$(_ILRepack_MergeXmlDocuments)">--xmldocs</_ILRepack_MergeXmlDocumentsOutput>
 
-      <_ILRepack_Options>$(_ILRepack_ParallelProcessingOption) $(_ILRepack_UnionTypesOption) $(_ILRepack_CopyAttributesOption) $(_ILRepack_PerformInternalizeOption) $(_ILRepack_AllowDuplicateResourcesOption) $(_ILRepack_AllowDuplicateNamespacesOption) $(_ILRepack_CombinedReferenceBasePathOption) $(_ILRepack_PerformVerboseOutput) $(_ILRepack_InsertRepackListOutput) $(_ILRepack_MergeDebugSymbolsOutput) $(_ILRepack_MergeXmlDocumentsOutput)</_ILRepack_Options>
+      <_ILRepack_Options>$(_ILRepack_ParallelProcessingOption) $(_ILRepack_UnionTypesOption) $(_ILRepack_CopyAttributesOption) $(_ILRepack_PerformInternalizeOption) $(_ILRepack_RenameInternalizedOption) $(_ILRepack_ExcludeInternalizeSerializableOption) $(_ILRepack_AllowDuplicateResourcesOption) $(_ILRepack_AllowDuplicateNamespacesOption) $(_ILRepack_CombinedReferenceBasePathOption) $(_ILRepack_PerformVerboseOutput) $(_ILRepack_InsertRepackListOutput) $(_ILRepack_MergeDebugSymbolsOutput) $(_ILRepack_MergeXmlDocumentsOutput)</_ILRepack_Options>
     </PropertyGroup>
     <Exec WorkingDirectory="$(ILRepackBuildToolingDir)"
         Command="$(ILRepackBuildToolingRuntimeName)&quot;$(ILRepackBuildToolingPath)&quot; $(_ILRepack_Options) @(_ILRepack_PrimaryAssembly->'--out:&quot;%(FullPath)&quot;',' ') @(_ILRepack_PrimaryAssembly->'&quot;%(FullPath)&quot;',' ') @(_ILRepack_ReferenceAssemblies->'&quot;%(FullPath)&quot;',' ')" />
